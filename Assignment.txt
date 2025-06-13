@@ -1,0 +1,21 @@
+--Create a star pyramid - python code
+*
+**
+***
+****
+*****
+---------------------------------------------------------------------
+--Write a python code to read a file and write a file
+---------------------------------------------------------------------
+--Create a function to convert a format the spring into uppercase
+---------------------------------------------------------------------
+--Create a list (array in other lang) - List has no limit - dynamic array
+  Tuple - Immutable
+  List - Mutable
+  Dictionary - 
+  Set - 
+  Strings - 
+  Classes and objects - 
+  Complexities - 
+  Advanced Topic - Decorator - 
+---------------------------------------------------------------------
