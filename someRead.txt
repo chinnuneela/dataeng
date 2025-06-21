@@ -1,0 +1,11 @@
+These are non-negotiable:
+
+• Know your data structures: arrays, maps, stacks, queues.
+• Learn key algorithms: sorting, searching, recursion, graphs.
+• Read the error messages: 99% of the time, they tell you what’s wrong.
+• Get good at debugging: logs and breakpoints are your friends.
+• Understand database design: tables, indexes, relationships.
+• Know how HTTP works: headers, methods, status codes.
+• Understand sync vs async, especially when things get slow.
+• Write tests that catch bugs, not just for coverage.
+• Read the docs; most issues are config, not code.
