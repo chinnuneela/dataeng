@@ -83,10 +83,10 @@ class ConnectDB(connection):
 # -----------------------------------------------------------------------------------------------
 
 import time 
-host = ""
-user = "ec2-user"
-password = ""
-database = "test_db"
+host = "ip-10-0-0-12.us-east-2.compute.internal"
+user = "admin"
+password = "Yashwant!14"
+database = "practice_db"
 
 db = ConnectDB(host=host,
                password=password,
