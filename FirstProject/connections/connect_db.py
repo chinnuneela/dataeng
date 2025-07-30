@@ -82,11 +82,11 @@ class ConnectDB(connection):
 
 # -----------------------------------------------------------------------------------------------
 
-import time 
-host = "ip-10-0-0-12.us-east-2.compute.internal"
+import datetime 
+host = "3.134.89.129"
 user = "admin"
 password = "Yashwant!14"
-database = "practice_db"
+database = "practice-db"
 
 db = ConnectDB(host=host,
                password=password,
@@ -94,11 +94,14 @@ db = ConnectDB(host=host,
                database=database
             )
 
-query = "select * from test_db.emp limit 10"
+
+
+currentime = datetime.time()
+
+query2 = "insert into practice-db.config (id,time) values(1,currentime)"
+db.insert_query(query2)
+
+query = "select * from practice-db.emp limit 10"
 result = db.fetch_query(query)
 print(result)
-
-time = time.now()
-query2 = "insert into test_db.config (id,time) values(1,time)"
-db.insert_query(query2)
 
