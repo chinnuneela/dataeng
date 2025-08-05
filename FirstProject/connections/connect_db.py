@@ -86,7 +86,7 @@ class ConnectDB(connection):
 
 
 # -----------------------------------------------------------------------------------------------
-
+import time
 import datetime 
 host = "3.134.89.129"
 user = "admin"
@@ -99,9 +99,6 @@ db1 = ConnectDB(host=host,
                database=database
             )
 
-<<<<<<< HEAD
-
-
 currentime = datetime.time()
 
 query2 = "insert into practice-db.config (id,time) values(1,currentime)"
@@ -111,7 +108,7 @@ query = "select * from practice-db.emp limit 10"
 result = db.fetch_query(query)
 print(result)
 
-=======
+
 db2 = ConnectDB(host=host,
                password=password,
                user=user,
@@ -140,4 +137,3 @@ db.insert_query(query2)
 
  
 
->>>>>>> 0a98312 (auf05)
