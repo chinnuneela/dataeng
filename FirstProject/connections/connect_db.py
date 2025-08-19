@@ -27,10 +27,15 @@ class ConnectDB(connection):
                 }
 
     def create_connection(self):
+        
         try:
-            self.connection = mysql.connector.connect(**self.config) 
-            if self.connection.is_connected():
-                print("Connection Established")
+            if self.connection is not None:
+                self.connection = mysql.connector.connect(**self.config) 
+                if self.connection.is_connected():
+                    print("Connection Established")
+            else:
+                return self.connection
+                    
         except Error as e:
             print(f"Some error while connecting to MySql : {e}")
 
@@ -67,7 +72,7 @@ class ConnectDB(connection):
 
             self.connection.commit()
             
-            curr.close()
+           
         except Exception as e:
             print(f"some error while executing the Insert query : {e}")
             return 
@@ -88,12 +93,13 @@ user = "admin"
 password = "Yashwant!14"
 database = "practice-db"
 
-db = ConnectDB(host=host,
+db1 = ConnectDB(host=host,
                password=password,
                user=user,
                database=database
             )
 
+<<<<<<< HEAD
 
 
 currentime = datetime.time()
@@ -105,3 +111,33 @@ query = "select * from practice-db.emp limit 10"
 result = db.fetch_query(query)
 print(result)
 
+=======
+db2 = ConnectDB(host=host,
+               password=password,
+               user=user,
+               database=database
+            )
+
+
+query = "select * from test_db.emp limit 10"
+result = db1.fetch_query(query)
+print(result)
+
+
+query = "select * from test_db.emp limit 10"
+result = db2.fetch_query(query)
+print(result)
+
+
+time = time.now()
+query2 = "insert into test_db.config (id,time) values(1,time)"
+db.insert_query(query2)
+
+# 1. Create a new sns topic 
+# 2. subscription to your email 
+# 3. lambda function code , push the message to sns topic 
+
+
+ 
+
+>>>>>>> 0a98312 (auf05)
