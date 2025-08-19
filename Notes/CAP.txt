@@ -1,0 +1,6 @@
+distributed systems 
+
+C - Consistency 
+A - Availability 
+P - Partition tolerance 
+
