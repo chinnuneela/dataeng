@@ -1,0 +1,21 @@
+~ $ aws ec2 describe-instances | grep 'PublicIpAddress'
+~ $ aws ec2 describe-instances | grep 'PrivateIpAddress'                                                                                                                                                                                                                            
+                            "PrivateIpAddress": "10.0.0.8",
+                            "PrivateIpAddresses": [
+                                    "PrivateIpAddress": "10.0.0.8"
+                    "PrivateIpAddress": "10.0.0.8"
+~ $ aws ec2 allocate-address
+{
+    "AllocationId": "eipalloc-03479ec63f6678dbd",
+    "PublicIpv4Pool": "amazon",
+    "NetworkBorderGroup": "us-east-2",
+    "Domain": "vpc",
+    "PublicIp": "3.131.253.119"
+}
+~ $ aws ec2 associate-address --instance-id i-0999b6d78e3029be8 --allocation-id eipalloc-3.131.253.119
+
+An error occurred (InvalidAllocationID.NotFound) when calling the AssociateAddress operation: The allocation ID 'eipalloc-3.131.253.119' does not exist
+~ $ aws ec2 associate-address --instance-id i-0999b6d78e3029be8 --allocation-id eipalloc-03479ec63f6678dbd
+{
+    "AssociationId": "eipassoc-0522fd83a02472923"
+}
