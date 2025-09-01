@@ -4,18 +4,19 @@ from collections import defaultdict
 
 #  hello this is   mukesh   Mukesh  
 def mapper(line):
-
+    result = []
     words = line.strip().lower().split() # [apple tiger ]
 
     for word in words:
-        yield word , 1 
-
+        yield word , 1
+       
 
 
 def reducer(mapped_data):
 
     word_counts = defaultdict(int)
-    
+   
+
     # word_counts = defaultdict(int): 
     # This creates a specialized dictionary. 
     # A defaultdict is a subclass of the built-in dict class. 
