@@ -93,7 +93,7 @@ user = "admin"
 password = "Yashwant!14"
 database = "practice-db"
 
-db1 = ConnectDB(host=host,
+db = ConnectDB(host=host,
                password=password,
                user=user,
                database=database
@@ -117,7 +117,7 @@ db2 = ConnectDB(host=host,
 
 
 query = "select * from test_db.emp limit 10"
-result = db1.fetch_query(query)
+result = db.fetch_query(query)
 print(result)
 
 
