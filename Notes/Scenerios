@@ -1,0 +1,56 @@
+Scenario-Based Questions
+
+
+1. A large Parquet dataset is being read from S3, but the job is experiencing frequent retries and slow performance.
+
+What optimizations could be applied, and which Spark or S3 settings should be examined?
+
+
+2. A Spark aggregation job fails due to an OutOfMemoryError.
+
+What steps should be taken to investigate and resolve the issue, considering both the code and cluster setup?
+
+
+3. A DataFrame has multiple columns with null values that need to be replaced with defaults.
+
+What’s a cleaner way to handle this without calling na.fill() for each column?
+
+4. A daily CSV ingestion pipeline encounters schema changes, like new columns being added over time.
+
+How can the PySpark logic be designed to handle this kind of evolving schema gracefully?
+
+
+5. Broadcast joins are expected to improve performance, but it seems they're not being triggered as intended.
+
+How does Spark decide when to apply a broadcast join, and how can one verify if it’s being used correctly?
+
+
+6. A DataFrame was cached to improve performance, but no noticeable gains were observed. How can you check if caching was effective, and what actions can be taken if it wasn’t?
+
+
+7.Coding Problem:
+
+Given time-series data, write PySpark code to compute a rolling average over the last 3 records per user_id using window functions.
+
+
+8. Coding Problem:
+
+There’s a column named tags containing arrays such as ["spark", "pyspark", "etl"].
+
+Write code to explode this array so each tag becomes its own row, along with the corresponding id.
+
+9.Coding Problem:
+
+In a large DataFrame, exact duplicates need to be removed while retaining the first occurrence based on load order.
+
+Which PySpark method would work best, and why is this preferable to simply using distinct()?
+
+10.When joining two large DataFrames, one key (like "India") is heavily skewed.What strategies can be employed to mitigate join skew in PySpark?
+
+11.The Structured Streaming job uses OutputMode = Complete and is running slowly.Under what circumstances should this mode be avoided, and what alternative output mode would improve performance?
+
+12. While writing data to Delta Lake, schema enforcement errors are occurring.How can schema mismatches be resolved, and what options exist to support schema evolution safely?
+
+13. Shuffle write times are high, and large shuffle files are slowing down the Spark job.What tuning methods can reduce shuffle size and optimize overall job execution?
+
+14. Using repartition(1) to write a single output file causes slowdowns or failures at scale.Why is this problematic, and what alternative approach should be used for generating a single file?

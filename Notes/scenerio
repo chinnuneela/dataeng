@@ -1,0 +1,59 @@
+Final round at FAANG for a Senior Databricks Data Engineer role. The interviewer asks: "Your main job just hit an OOM error. How do you debug it?'"
+
+(Hint: The offer-winning answer is in the Spark UI).
+
+This question separates engineers who guess from those who diagnose. 
+
+A junior asks for a bigger cluster. A senior opens the Spark UI.
+
+Here's the offer-winning answer:
+
+❌ 𝗧𝗵𝗲 𝗝𝘂𝗻𝗶𝗼𝗿 (𝗥𝗲𝗷𝗲𝗰𝘁𝗶𝗼𝗻) 𝗔𝗻𝘀𝘄𝗲𝗿
+
+"I'd increase executor memory or get a bigger cluster."
+
+This is a costly guess. It treats the symptom, not the cause, and signals that you solve problems by spending money instead of thinking.
+
+✅ 𝗧𝗵𝗲 𝗦𝗲𝗻𝗶𝗼𝗿 (𝗢𝗳𝗳𝗲𝗿-𝗪𝗶𝗻𝗻𝗶𝗻𝗴) 𝗔𝗻𝘀𝘄𝗲𝗿
+
+"My first step is always diagnosis, not action. I go straight to the Spark UI for the failed job to find the evidence. The goal is to determine if the root cause is true memory pressure or, more commonly, data skew."
+
+--
+⚙️ 𝗦𝘁𝗲𝗽 𝟭: 𝗔𝗻𝗮𝗹𝘆𝘇𝗲 𝘁𝗵𝗲 𝗘𝘅𝗲𝗰𝘂𝘁𝗼𝗿𝘀 𝗧𝗮𝗯
+
+"This page is my ground truth. I'd check the aggregated metrics for three red flags:"
+
+𝗦𝗽𝗶𝗹𝗹 (𝗠𝗲𝗺𝗼𝗿𝘆/𝗗𝗶𝘀𝗸): Any spill > 0 GB is a major warning sign. It means Spark used disk when it ran out of RAM, a classic sign of an impending OOM.
+
+𝗚𝗖 𝗧𝗶𝗺𝗲: If GC time is >10% of total task time, the executor is fighting for memory instead of working. This signals high memory pressure.
+
+𝗧𝗮𝘀𝗸 𝗧𝗶𝗺𝗲 (𝗠𝗶𝗻/𝗠𝗲𝗱𝗶𝗮𝗻/𝗠𝗮𝘅): The clearest indicator of data skew. If max task time is >5-10x the median, a few tasks are doing all the work.
+
+--
+💭 𝗦𝘁𝗲𝗽 𝟮: 𝗙𝗼𝗿𝗺𝘂𝗹𝗮𝘁𝗲 𝗮 𝗛𝘆𝗽𝗼𝘁𝗵𝗲𝘀𝗶𝘀
+
+"Based on those metrics, I can distinguish between the two main scenarios:"
+
+𝗦𝗰𝗲𝗻𝗮𝗿𝗶𝗼 𝗔: 𝗜𝘁'𝘀 𝗗𝗮𝘁𝗮 𝗦𝗸𝗲𝘄.
+𝗘𝘃𝗶𝗱𝗲𝗻𝗰𝗲: One or two executors show massive Spill/GC Time while others are fine. Task Time max is huge compared to the median.
+
+𝗙𝗶𝘅: "This is a data distribution problem, not a memory problem. I'd fix it by salting keys or ensuring Adaptive Query Execution (AQE) is enabled to handle the skew."
+
+𝗦𝗰𝗲𝗻𝗮𝗿𝗶𝗼 𝗕: 𝗜𝘁'𝘀 𝗧𝗿𝘂𝗲 𝗠𝗲𝗺𝗼𝗿𝘆 𝗣𝗿𝗲𝘀𝘀𝘂𝗿𝗲.
+𝗘𝘃𝗶𝗱𝗲𝗻𝗰𝗲: High Spill and GC time are distributed evenly across all executors.
+
+𝗙𝗶𝘅: "Before adding memory, I'd first audit the code for inefficiencies like a .collect() call, a bad UDF, or oversized data partitions. I'd only recommend a larger cluster after code optimization."
+
+---
+
+📝 𝗧𝗟;𝗗𝗥
+
+- Never guess. Diagnose first in the Spark UI.
+
+- Check the Executors tab for Spill, GC Time, and skewed Task Times.
+
+- Differentiate between data skew and true memory pressure.
+
+- Propose code-level fixes before recommending expensive hardware.
+
+What's the most deceptive OOM error you've ever debugged?
