@@ -1,0 +1,50 @@
+[
+{
+        "id": 1,
+        "name": "Alice",
+        "profile": {
+            "age": 30,
+            "contacts": {
+                "emails": ["alice@example.com", "alice.work@example.com"],
+                "phones": [{"type": "home", "number": "123-456"}, {"type": "work", "number": "987-654"}]
+            }
+        },
+        "orders": [
+            {
+                "order_id": 101,
+                "date": "2025-10-13",
+                "items": [
+                    {"item_id": "A1", "price": 10, "tags": ["electronics", "mobile"]},
+                    {"item_id": "A2", "price": 15, "tags": ["electronics", "accessory"]}
+                ]
+            },
+            {
+                "order_id": 102,
+                "date": "2025-10-14",
+                "items": [
+                    {"item_id": "A3", "price": 20, "tags": ["home", "kitchen"]}
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Bob",
+        "profile": {
+            "age": 25,
+            "contacts": {
+                "emails": ["bob@example.com"],
+                "phones": [{"type": "mobile", "number": "555-111"}]
+            }
+        },
+        "orders": [
+            {
+                "order_id": 201,
+                "date": "2025-10-15",
+                "items": [
+                    {"item_id": "B1", "price": 5, "tags": ["book"]}
+                ]
+            }
+        ]
+    }
+]
