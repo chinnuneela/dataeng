@@ -1,3 +1,4 @@
+from FirstProject.connections.connect_db import connection
 import boto3 
 
 def get_secrets():
@@ -10,3 +11,5 @@ def get_secrets():
 
     return { "user" : cleint.fetch("sf_user") ,
             "password" : cleint.fetch("sf_password") }
+
+connection.close()
