@@ -12,4 +12,3 @@ def get_secrets():
     return { "user" : cleint.fetch("sf_user") ,
             "password" : cleint.fetch("sf_password") }
 
-connection.close()
