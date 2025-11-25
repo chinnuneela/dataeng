@@ -1,0 +1,13 @@
+Downloading MySQL Connector/J version: 8.0.33
+Trying: https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Failed: https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Trying: https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Failed: https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Trying: https://repo1.maven.org/maven2/com/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Failed: https://repo1.maven.org/maven2/com/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Trying: https://search.maven.org/remotecontent?filepath=com/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Failed: https://search.maven.org/remotecontent?filepath=com/mysql/mysql-connector-java/8.0.33/mysql-connector-java-8.0.33.jar
+Trying: https://repo1.maven.org/maven2/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar
+Failed: https://repo1.maven.org/maven2/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar
+Trying: https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar
+Failed: https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar
