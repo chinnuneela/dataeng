@@ -1,4 +1,7 @@
 """
+Author : Mukesh Date : 07-Dec-2025
+Library Requirements: Dbldatagen
+---------------------------------------
 Generate 5GB of Indian Citizen Data using PySpark and dbldatagen
 Data includes: Aadhar Number, State, Name, and other demographic fields
 """
