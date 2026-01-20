@@ -1,0 +1,10 @@
+{"employee_id":101,"employee_name":"Alice Johnson","department":"Sales","salary":65000,"hire_date":"2020-01-15T00:00:00.000+05:30","performance_score":3.85,"is_active":true,"bonus_percentage":5}
+{"employee_id":102,"employee_name":"Bob Smith","department":"IT","salary":85000,"hire_date":"2020-02-15T00:00:00.000+05:30","performance_score":4.62,"is_active":true,"bonus_percentage":8}
+{"employee_id":103,"employee_name":"Charlie Brown","department":"HR","salary":55000,"hire_date":"2020-03-15T00:00:00.000+05:30","performance_score":3.21,"is_active":false,"bonus_percentage":3}
+{"employee_id":104,"employee_name":"Diana Prince","department":"Finance","salary":75000,"hire_date":"2020-04-15T00:00:00.000+05:30","performance_score":4.45,"is_active":true,"bonus_percentage":6}
+{"employee_id":105,"employee_name":"Eve Wilson","department":"Sales","salary":68000,"hire_date":"2020-05-15T00:00:00.000+05:30","performance_score":3.95,"is_active":true,"bonus_percentage":5}
+{"employee_id":106,"employee_name":"Frank Miller","department":"IT","salary":90000,"hire_date":"2020-06-15T00:00:00.000+05:30","performance_score":4.78,"is_active":true,"bonus_percentage":10}
+{"employee_id":107,"employee_name":"Grace Lee","department":"HR","salary":58000,"hire_date":"2020-07-15T00:00:00.000+05:30","performance_score":3.12,"is_active":false,"bonus_percentage":2}
+{"employee_id":108,"employee_name":"Henry Davis","department":"Finance","salary":78000,"hire_date":"2020-08-15T00:00:00.000+05:30","performance_score":4.35,"is_active":true,"bonus_percentage":7}
+{"employee_id":109,"employee_name":"Iris Anderson","department":"Sales","salary":70000,"hire_date":"2020-09-15T00:00:00.000+05:30","performance_score":4.05,"is_active":true,"bonus_percentage":6}
+{"employee_id":110,"employee_name":"Jack Wilson","department":"IT","salary":88000,"hire_date":"2020-10-15T00:00:00.000+05:30","performance_score":4.55,"is_active":true,"bonus_percentage":9}
