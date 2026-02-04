@@ -1,0 +1,61 @@
+04-Feb-2026
+--------------------------
+There are some Data Modelling exercise . Please try to create Data Modelling solutions along with 
+SQL questions that can be asked . We discuss in our discussion call .
+
+Also , choose a good free data modelling tool . 
+Each answer should be in a seperate file ( preferably Msword document)
+
+
+1. Online BookStore 
+
+Requirements : 
+    1. Customers can buy multiple books ina. single order
+    2. Each book has an author and a publisher
+    3. A book can belong to multiple categories 
+    4. Track order status (created , paid , shipped)
+
+Note: Before drwing anything better to extract business facts . 
+
+-----------------------------------------------------------------------
+
+
+2. Design a social networking application similar to Facebook , Twitter (X) or LinkedIN .
+   
+
+---------------------------------------------------------------------------
+
+3. Create a Normalised data model for an e-commerce platform like Amazon , Flipkart etc   
+The system should support customers , products with variants , seller , inventory , orders , payments and shipping .
+Explain entities , relationships , and any assumptions you make . 
+
+Now the follow up questions will be asked as :
+   1. Why a particular table is created , say order table .
+   2. Why payment is seperated from order table ? 
+
+   Questions can be asked based on Cardinality :
+   1. Can one order have multiple shipments ?
+   2. Can one customer have multiple active orders ? 
+
+And many more ...
+
+----------------------------------------------------------------------------
+
+4. Design an advanced Garage parking system ( it should be bit advanced which we discussed )
+
+
+-----------------------------------------------------------------------------
+
+5. Design a normalised data model for application like Ola,Uber.
+The system should support riders , drivers , vehicles , ride requests , trips  , payments & ratings .
+Claarly identify entities , relationships , and any assumptions ? 
+
+Similar to above . 
+
+
+
+===============================================================================
+
+Note : Please invest good time here , if required you can take help over internet . The aim is to understand
+the data modelling completely and if someone asks we can promptly able to discuss something .
+

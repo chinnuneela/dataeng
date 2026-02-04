@@ -1,3 +1,6 @@
 {
-    "sqltools.connections": []
+    "sqltools.connections": [],
+    "files.exclude": {
+        ".*": true
+    }
 }

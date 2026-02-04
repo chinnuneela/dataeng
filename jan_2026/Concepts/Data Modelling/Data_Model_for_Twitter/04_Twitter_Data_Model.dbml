@@ -1,0 +1,337 @@
+// ============================================
+// TWITTER DATA MODEL - DBML FORMAT
+// Use at: https://dbdiagram.io/
+// ============================================
+
+// ============================================
+// CORE ENTITY: USERS
+// ============================================
+
+Table users {
+  user_id int [pk, increment]
+  username varchar(50) [unique, not null, note: 'Display name, @username']
+  email varchar(100) [unique, not null]
+  password_hash varchar(255) [not null]
+  display_name varchar(100) [note: 'Full name']
+  bio text [note: 'Max 160 characters']
+  profile_image_url varchar(500)
+  banner_image_url varchar(500)
+  location varchar(100)
+  website varchar(200)
+  is_verified boolean [default: false, note: 'Blue checkmark']
+  is_private boolean [default: false, note: 'Private account']
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  // Denormalized counts for performance
+  followers_count int [default: 0]
+  following_count int [default: 0]
+  tweets_count int [default: 0]
+  
+  Indexes {
+    username
+    email
+  }
+  
+  Note: 'Platform users - central entity for all interactions'
+}
+
+// ============================================
+// CORE ENTITY: TWEETS
+// ============================================
+
+Table tweets {
+  tweet_id bigint [pk, increment, note: 'BIGINT for scale']
+  user_id int [not null, ref: > users.user_id]
+  tweet_text varchar(280) [not null, note: 'Max 280 characters']
+  tweet_type varchar(20) [default: 'original', note: 'original, reply, retweet, quote']
+  
+  // Self-referencing for threading and retweets
+  reply_to_tweet_id bigint [ref: > tweets.tweet_id, note: 'Parent tweet if reply']
+  retweet_of_tweet_id bigint [ref: > tweets.tweet_id, note: 'Original if retweet']
+  quote_tweet_id bigint [ref: > tweets.tweet_id, note: 'Quoted tweet']
+  
+  // Media
+  media_url varchar(500)
+  media_type varchar(20) [note: 'image, video, gif']
+  
+  // Timestamps
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  // Soft delete
+  is_deleted boolean [default: false]
+  
+  // Denormalized engagement counts
+  likes_count int [default: 0]
+  retweets_count int [default: 0]
+  replies_count int [default: 0]
+  views_count bigint [default: 0]
+  
+  Indexes {
+    user_id
+    created_at
+    tweet_type
+    (user_id, created_at) [note: 'User timeline']
+  }
+  
+  Note: 'All tweets including originals, replies, retweets, and quotes'
+}
+
+// ============================================
+// SOCIAL GRAPH: FOLLOWS
+// ============================================
+
+Table follows {
+  follow_id int [pk, increment]
+  follower_id int [not null, ref: > users.user_id, note: 'User who follows']
+  following_id int [not null, ref: > users.user_id, note: 'User being followed']
+  followed_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    follower_id
+    following_id
+    (follower_id, following_id) [unique, note: 'Prevent duplicate follows']
+  }
+  
+  Note: 'Many-to-many self-referencing: users follow users'
+}
+
+// ============================================
+// ENGAGEMENT: LIKES
+// ============================================
+
+Table likes {
+  like_id bigint [pk, increment]
+  user_id int [not null, ref: > users.user_id]
+  tweet_id bigint [not null, ref: > tweets.tweet_id]
+  liked_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    user_id
+    tweet_id
+    (user_id, tweet_id) [unique, note: 'One like per user per tweet']
+  }
+  
+  Note: 'Many-to-many: users like tweets'
+}
+
+// ============================================
+// ENGAGEMENT: RETWEETS
+// ============================================
+
+Table retweets {
+  retweet_id bigint [pk, increment]
+  user_id int [not null, ref: > users.user_id]
+  tweet_id bigint [not null, ref: > tweets.tweet_id, note: 'Original tweet']
+  retweeted_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    user_id
+    tweet_id
+    (user_id, tweet_id) [unique, note: 'One retweet per user per tweet']
+  }
+  
+  Note: 'Tracks retweet actions - also creates entry in tweets table'
+}
+
+// ============================================
+// DISCOVERY: HASHTAGS
+// ============================================
+
+Table hashtags {
+  hashtag_id int [pk, increment]
+  hashtag_text varchar(100) [unique, not null, note: 'Lowercase, without #']
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  usage_count int [default: 0, note: 'For trending calculation']
+  
+  Indexes {
+    hashtag_text
+    usage_count [note: 'For trending queries']
+  }
+  
+  Note: 'Master list of all hashtags used on platform'
+}
+
+// ============================================
+// JUNCTION: TWEET_HASHTAGS
+// ============================================
+
+Table tweet_hashtags {
+  tweet_hashtag_id int [pk, increment]
+  tweet_id bigint [not null, ref: > tweets.tweet_id]
+  hashtag_id int [not null, ref: > hashtags.hashtag_id]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    tweet_id
+    hashtag_id
+    (tweet_id, hashtag_id) [unique, note: 'One hashtag per tweet']
+  }
+  
+  Note: 'Many-to-many: tweets contain hashtags'
+}
+
+// ============================================
+// ENGAGEMENT: MENTIONS
+// ============================================
+
+Table mentions {
+  mention_id bigint [pk, increment]
+  tweet_id bigint [not null, ref: > tweets.tweet_id]
+  mentioned_user_id int [not null, ref: > users.user_id]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    tweet_id
+    mentioned_user_id
+    (tweet_id, mentioned_user_id) [unique, note: 'One mention per user per tweet']
+  }
+  
+  Note: 'Many-to-many: tweets mention users (@username)'
+}
+
+// ============================================
+// MESSAGING: DIRECT MESSAGES
+// ============================================
+
+Table messages {
+  message_id bigint [pk, increment]
+  sender_id int [not null, ref: > users.user_id]
+  receiver_id int [not null, ref: > users.user_id]
+  message_text text [not null]
+  media_url varchar(500)
+  sent_at timestamp [default: `CURRENT_TIMESTAMP`]
+  is_read boolean [default: false]
+  read_at timestamp [null]
+  
+  Indexes {
+    sender_id
+    receiver_id
+    (sender_id, receiver_id, sent_at) [note: 'Conversation history']
+  }
+  
+  Note: 'Private messages between users'
+}
+
+// ============================================
+// NOTIFICATIONS
+// ============================================
+
+Table notifications {
+  notification_id bigint [pk, increment]
+  user_id int [not null, ref: > users.user_id, note: 'Recipient']
+  notification_type varchar(50) [not null, note: 'like, retweet, reply, follow, mention, message']
+  actor_user_id int [ref: > users.user_id, note: 'Who triggered notification']
+  related_tweet_id bigint [ref: > tweets.tweet_id, note: 'Related content']
+  notification_text text
+  is_read boolean [default: false]
+  created_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    user_id
+    is_read
+    created_at
+    (user_id, is_read, created_at) [note: 'Unread notifications']
+  }
+  
+  Note: 'User activity alerts and notifications'
+}
+
+// ============================================
+// BOOKMARKS
+// ============================================
+
+Table bookmarks {
+  bookmark_id bigint [pk, increment]
+  user_id int [not null, ref: > users.user_id]
+  tweet_id bigint [not null, ref: > tweets.tweet_id]
+  bookmarked_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Indexes {
+    user_id
+    tweet_id
+    (user_id, tweet_id) [unique, note: 'One bookmark per user per tweet']
+  }
+  
+  Note: 'Private: users save tweets for later'
+}
+
+// ============================================
+// RELATIONSHIP SUMMARY
+// ============================================
+
+// One-to-Many Relationships:
+// - users -> tweets (one user creates many tweets)
+// - users -> notifications (one user receives many notifications)
+// - tweets -> tweets (one tweet has many replies - self-ref)
+// - tweets -> tweets (one tweet has many retweets - self-ref)
+
+// Many-to-Many Relationships:
+// - users <-> users (via follows - self-ref)
+// - users <-> tweets (via likes)
+// - users <-> tweets (via retweets)
+// - users <-> tweets (via bookmarks)
+// - tweets <-> hashtags (via tweet_hashtags)
+// - tweets <-> users (via mentions)
+// - users <-> users (via messages - self-ref)
+
+// ============================================
+// BUSINESS RULES (Implemented via Constraints)
+// ============================================
+
+// 1. Users cannot follow themselves
+//    CHECK (follower_id != following_id) in follows table
+
+// 2. Users cannot message themselves
+//    CHECK (sender_id != receiver_id) in messages table
+
+// 3. Tweet text max 280 characters
+//    VARCHAR(280) in tweets.tweet_text
+
+// 4. One user can like/retweet/bookmark a tweet only once
+//    UNIQUE constraints on junction tables
+
+// 5. Usernames and emails must be unique
+//    UNIQUE constraints on users table
+
+// ============================================
+// PERFORMANCE OPTIMIZATIONS
+// ============================================
+
+// 1. Denormalized Counts:
+//    - users: followers_count, following_count, tweets_count
+//    - tweets: likes_count, retweets_count, replies_count, views_count
+//    - hashtags: usage_count
+
+// 2. Strategic Indexes:
+//    - Foreign keys (automatic in most DBs)
+//    - Frequently queried columns (username, email, hashtag_text)
+//    - Composite indexes for common query patterns
+//    - Timestamp indexes for timeline queries
+
+// 3. BIGINT for Scale:
+//    - tweet_id, message_id, notification_id
+//    - Supports billions of records
+
+// ============================================
+// SCALABILITY CONSIDERATIONS
+// ============================================
+
+// 1. Partitioning Strategy:
+//    - tweets: Partition by created_at (monthly/yearly)
+//    - messages: Partition by sent_at
+//    - notifications: Partition by created_at
+
+// 2. Sharding Strategy:
+//    - Shard users by user_id range
+//    - Co-locate user's tweets with user data
+
+// 3. Caching:
+//    - User profiles (Redis)
+//    - Tweet engagement counts
+//    - Follower/following lists
+//    - Trending hashtags
+
+// 4. Read Replicas:
+//    - Separate read and write databases
+//    - Route timeline queries to replicas

@@ -1,0 +1,61 @@
+Part 1 : 
+
+Write some pyspark programs to read a parquet file . 
+
+Scenerio : 
+
+       P1 : We got huge data in s3 ( for now assume locally). 
+            Before doing anything we can record some statistics like the counts , file format etc . 
+            Create an output file as record.json with the format as - 
+                {
+                  'format':'', 
+                  'count':''  
+                  'status':''
+                }
+
+
+       P2: Now do a data cleansing activity .
+            This should read the record.json file along with input file .
+            If the status in record.json is valid then perform the below activity else exit the program with exception as "Data is not correct" 
+            The Names should be capitalised .
+            The date should be uniform ( DD-MM-YYYY)
+            Null should be replaced with Unknown for text field , 0 for numeric fields.
+            
+       P3:
+          
+           Transformations :
+           do some aggregations ( it should however defined clearly , but for now u assume)
+           save the result as parquet to some location 
+
+       P4:
+           Create Dynamic table as tablename_<date>
+           Create a table in Mysql having the fields as the output in P4 
+           
+       P5:     
+           Write the data into the MYSQL table .     
+
+
+Part 2 : 
+  
+       Now we have 5 pyspark programs and now it should be run in a single pipeline . 
+       All tasks are dependent on each other , means a failure in one means the pipeline should stop .
+
+       To orchestrate the pipeline we have various options :
+
+            1. Oozie ( obsolete now , so not using this)
+            2. Airflow ( beautiful choice , but not yet reached there)
+            3. Shell-script ( Yes , we will start from here )
+
+                 -- We will create a shell script which will simply run the system commands as
+
+                    sh("spark-submit P1.py")
+                    check last command completion status and based on that 
+                    sh("spark-submit P2.py")
+                    ....
+                    so on 
+
+                No worries , I will provide the script . 
+                We initially started orchestrating with shell-script only , so good to know , though you won't use it . 
+
+                
+                    
