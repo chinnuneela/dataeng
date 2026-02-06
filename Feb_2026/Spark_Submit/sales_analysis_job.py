@@ -122,14 +122,14 @@ SPARK-SUBMIT COMMANDS:
 
 2. With Memory and Core Configuration:
    spark-submit \
-     --master local[*] \
+     --master 'local[*]' \
      --driver-memory 4g \
      --executor-memory 4g \
      sales_analysis_job.py
 
 3. With Dynamic Allocation (for cluster):
    spark-submit \
-     --master local[*] \
+     --master 'local[*]' \
      --conf spark.dynamicAllocation.enabled=true \
      --conf spark.dynamicAllocation.minExecutors=1 \
      --conf spark.dynamicAllocation.maxExecutors=5 \
