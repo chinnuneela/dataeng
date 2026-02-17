@@ -11,6 +11,10 @@ indian_citizens_data/
 *_data/
 *.json
 
+# Local metadata files
+metadata.json
+*/metadata.json
+
 
 # Python cache
 __pycache__/
