@@ -1,9 +1,7 @@
-.DS_Store
 # Virtual environment
 .venv/
 env/
 venv/
-
 
 # Spark / Parquet output
 indian_citizens_data/
@@ -15,15 +13,24 @@ indian_citizens_data/
 metadata.json
 */metadata.json
 
-
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
+*.egg
 
 # Logs
 *.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb~
+
+# Spark / Hadoop
+spark-warehouse/
+derby.log
 
 # OS files
 .DS_Store
