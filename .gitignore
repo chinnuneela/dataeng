@@ -9,6 +9,7 @@ venv/
 indian_citizens_data/
 *.parquet
 *_data/
+*.json
 
 
 # Python cache
